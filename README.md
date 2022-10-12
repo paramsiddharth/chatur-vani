@@ -1,6 +1,6 @@
 # Chatur Vani
-Chatur Vani ([@chatur_vani](https://twitter.com/chatur_vani)) is a bot,
-currently available on Twitter.
+Chatur Vani (@chatur_vani) is a bot,
+currently available on [Twitter](https://twitter.com/chatur_vani).
 
 ![Profile Photo](meta/dp.jpeg)
 
