@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset='UTF-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	<title>Quote on Canvas</title>
+</head>
+<body>
+	<canvas id='canvas'></canvas>
+	<script>
+		const height = 1000, width = height,
+			  bgColor    = '#d00',
+			//   bgColor    = '#dff',
+			  light      = false,
+			  fontRatio  = 40 / 750,
+			  fontSize   = fontRatio * width;
+
+		const quote = `If you think you can "do" it, & you can most 'probably' < definitely do it. Yep, I'm pretty sure about it. Yesss!`
+			.replace(/\&/g, '&amp;').replace(/</g, '&lt;');
+
+		const svg = `
+		<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+			<foreignObject x="0" y="0" width="${width}" height="${height}">
+				<style>
+					
+
+				div.a {
+					margin: 20px 80px;
+					height: ${height}px;
+					font-weight: normal;
+					font-family: 'Montserrat';
+					font-style: italic;
+					font-weight: bold;
+					font-size: ${fontSize}px;
+					color: ${light ? 'black' : 'white'};
+					display: flex;
+				}
+
+				div.b {
+					margin: auto;
+				}
+				</style>
+				<div xmlns="http://www.w3.org/1999/xhtml">
+					<div class='a'>
+						<div class='b'>${quote}</div>
+					</div>
+				</div>
+			</foreignObject>
+		</svg>
+		`
+		.replace(/\n/g, '');
+
+		window.addEventListener('load', () => {
+			/**
+			 * @type {HTMLCanvasElement}
+			 */
+			const canvas = document.getElementById('canvas');
+
+			canvas.height = height;
+			canvas.width = width;
+
+			const ctx = canvas.getContext('2d');
+
+			ctx.fillStyle = bgColor;
+			ctx.fillRect(0, 0, width, height);
+
+			const grad = ctx.createRadialGradient(
+				width / 2, height / 2,
+				width / 4,
+				width / 2, height / 2,
+				width * 4
+			);
+
+			grad.addColorStop(0, bgColor);
+			grad.addColorStop(0.5, light ? 'white' : 'black');
+
+			ctx.fillStyle = grad;
+			ctx.fillRect(0, 0, width, height);
+
+			const img = document.createElement('img');
+
+			img.onload = () => {
+				ctx.drawImage(img, 0, 0);
+			};
+
+			img.src = `data:image/svg+xml,${svg}`;
+		});
+	</script>
+</body>
+</html>
