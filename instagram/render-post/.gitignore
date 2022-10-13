@@ -130,4 +130,5 @@ dist
 .pnp.*
 
 # Fonts
-/fonts
+/fonts/*
+!/fonts/items.example.json

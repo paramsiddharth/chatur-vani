@@ -1,0 +1,13 @@
+{
+	"default": "Montserrat",
+	"fonts": [
+		{
+			"name": "Montserrat",
+			"google": "https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+		},
+		{
+			"name": "Roboto",
+			"file": "Roboto.ttf"
+		}
+	]
+}
