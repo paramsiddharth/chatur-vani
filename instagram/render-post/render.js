@@ -5,10 +5,8 @@ const ejs = require('ejs');
 
 const { DIMENSION, FONT_RATIO } = require('./constants');
 
-const render = async (text, postPath, light = false, colour = '#d00' /* '#dff' */, font = null) => new Promise(async done => {
-	const height = DIMENSION,
-	      width  = DIMENSION,
-		  fontSize = DIMENSION * FONT_RATIO;
+const render = async (text, postPath, light = false, colour = '#d00' /* '#dff' */, font = 'Montserrat') => new Promise(async done => {
+	const fontSize = DIMENSION * FONT_RATIO;
 
 	const browser = await puppet.launch({
 		headless: true
@@ -22,7 +20,7 @@ const render = async (text, postPath, light = false, colour = '#d00' /* '#dff' *
 		light,
 		fontSize,
 		text: text.replace(/\&/g, '&amp;').replace(/</g, '&lt;'),
-		font: 'Montserrat'
+		font
 	});
 	// fs.writeFileSync(path.join(__dirname, 'render.html'), html);
 	/* await page.setViewport({

@@ -1,0 +1,35 @@
+[
+	{
+		"colour": "#d00",
+		"light": false
+	},
+	{
+		"colour": "#0046a7",
+		"light": false
+	},
+	{
+		"colour": "#9000b9",
+		"light": false
+	},
+	{
+		"colour": "#b9007b",
+		"light": false
+	},
+
+	{
+		"colour": "#00fb25",
+		"light": true
+	},
+	{
+		"colour": "#fcba03",
+		"light": true
+	},
+	{
+		"colour": "#ffa7a7",
+		"light": true
+	},
+	{
+		"colour": "#00efb3",
+		"light": true
+	}
+]

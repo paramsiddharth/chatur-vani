@@ -21,7 +21,8 @@
 			font-size: <%= fontSize %>px;
 			color: <%= light ? 'black' : 'white' %>;
 			display: flex;
-			background: radial-gradient(<%- colour %> 0%, <%- light ? 'white' : 'black' %> 400%);
+			/* background: radial-gradient(<%- colour %> 0%, <%- light ? 'white' : 'black' %> 400%); */
+			background: radial-gradient(<%- colour %> 0%, black 400%);
 		}
 
 		#text {
@@ -30,7 +31,6 @@
 	</style>
 </head>
 <body>
-	<h1 style='font-family: "<%- font %>";'>Hi there!</h1>
 	<div id='render'>
 		<div id='text'>
 			<%- text %>
