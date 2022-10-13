@@ -137,3 +137,6 @@ dist
 *.svg
 *.png
 *.pdf
+*.jpg
+*.jpeg
+*.html

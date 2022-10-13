@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const puppet = require('puppeteer');
+const ejs = require('ejs');
 
 const { DIMENSION, FONT_RATIO } = require('./constants');
 
@@ -44,7 +45,7 @@ const getSVG = (text, width, height, fontSize, light) => {
 	return svg;
 };
 
-const render = async (text, postPath, light = false, colour = '#d00', font = null) => new Promise(async done => {
+const render = async (text, postPath, light = false, colour = '#d00' /* '#dff' */, font = null) => new Promise(async done => {
 	const height = DIMENSION,
 	      width  = DIMENSION,
 		  fontSize = DIMENSION * FONT_RATIO;
@@ -56,23 +57,35 @@ const render = async (text, postPath, light = false, colour = '#d00', font = nul
 	});
 	const page = await browser.newPage();
 
-	const html = fs.readFileSync(path.resolve(__dirname, 'render.html')).toString();
-	page.setContent(html);
+	const template = fs.readFileSync(path.resolve(__dirname, 'render.ejs')).toString();
+	const html = ejs.compile(template)({
+		dimension: DIMENSION,
+		colour: JSON.stringify(colour),
+		light,
+		fontSize,
+		text: JSON.stringify(text.replace(/\&/g, '&amp;').replace(/</g, '&lt;')),
+		font: 'Montserrat'
+	});
+	fs.writeFileSync(path.join(__dirname, 'render.html'), html);
+	await page.setContent(html, {
+		waitUntil: 'networkidle0'
+	});
 
-	page.on('load', async () => {
-		const dataURL = await page.evaluate(async () => {
-			const e = document.querySelector('#canvas');
-			return await e.toDataURL();
-		});
+	await new Promise(r => setTimeout(r, 4000));
 
-		await browser.close();
+	const dataURL = await page.evaluate(async () => {
+		const e = document.querySelector('#canvas');
+		return await e.toDataURL();
+	});
 
-		const buf = Buffer.from(dataURL.replace(/^data:image\/png;base64,/, ''), 'base64');
-		fs.writeFileSync(path.resolve(postPath, 'post.png'), buf, {
-			encoding: 'binary'
-		});
+	await page.setViewport({ width: 1440, height: 1080 });
+	await page.screenshot({ path: path.join(__dirname, 'screenshot.jpeg') });
 
-		done();
+	await browser.close();
+
+	const buf = Buffer.from(dataURL.replace(/^data:image\/png;base64,/, ''), 'base64');
+	fs.writeFileSync(path.resolve(postPath, 'post.png'), buf, {
+		encoding: 'binary'
 	});
 });
 
