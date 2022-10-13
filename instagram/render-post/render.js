@@ -1,9 +1,10 @@
 const fs = require('fs-extra');
 const path = require('path');
+const puppet = require('puppeteer');
 
 const { DIMENSION, FONT_RATIO } = require('./constants');
 
-const getSVG = (text, width, height, fontName, fontSize, light) => {
+const getSVG = (text, width, height, fontSize, light) => {
 	// HTML entitites
 	const escapedText = text
 		.replace(/\&/g, '&amp;').replace(/</g, '&lt;');
@@ -18,11 +19,7 @@ const getSVG = (text, width, height, fontName, fontSize, light) => {
 				margin: 20px 80px;
 				height: ${height}px;
 				font-weight: normal;
-				${
-					fontName != null
-					? `font-family: ${JSON.stringify(fontName)};`
-					: ''
-				}
+				font-family: 'Montserrat';
 				font-style: italic;
 				font-weight: bold;
 				font-size: ${fontSize}px;
@@ -47,15 +44,37 @@ const getSVG = (text, width, height, fontName, fontSize, light) => {
 	return svg;
 };
 
-const render = async (text, postPath, light = false, colour = '#d00', font = null) => {
+const render = async (text, postPath, light = false, colour = '#d00', font = null) => new Promise(async done => {
 	const height = DIMENSION,
 	      width  = DIMENSION,
 		  fontSize = DIMENSION * FONT_RATIO;
 	
-	const svg = getSVG(text, width, height, defaultFont, fontSize, light);
+	const svg = getSVG(text, width, height, fontSize, light);
 
-	// TODO
-};
+	const browser = await puppet.launch({
+		headless: true
+	});
+	const page = await browser.newPage();
+
+	const html = fs.readFileSync(path.resolve(__dirname, 'render.html')).toString();
+	page.setContent(html);
+
+	page.on('load', async () => {
+		const dataURL = await page.evaluate(async () => {
+			const e = document.querySelector('#canvas');
+			return await e.toDataURL();
+		});
+
+		await browser.close();
+
+		const buf = Buffer.from(dataURL.replace(/^data:image\/png;base64,/, ''), 'base64');
+		fs.writeFileSync(path.resolve(postPath, 'post.png'), buf, {
+			encoding: 'binary'
+		});
+
+		done();
+	});
+});
 
 module.exports = {
 	render
