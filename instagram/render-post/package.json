@@ -1,0 +1,17 @@
+{
+  "name": "render-post",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Renders posts for Instagram.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Param Siddharth <contact@paramsid.com> (http://www.paramsid.com/)",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^10.1.0",
+    "yargs": "^17.6.0"
+  }
+}
