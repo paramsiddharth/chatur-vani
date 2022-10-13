@@ -9,102 +9,32 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=<%- font %>&display=swap" rel="stylesheet">
+	<style>
+		#render {
+			margin: 20px 80px;
+			height: <%= dimension %>px;
+			width: <%= dimension %>px;
+			font-weight: normal;
+			font-family: '<%- font %>';
+			font-style: italic;
+			font-weight: bold;
+			font-size: <%= fontSize %>px;
+			color: <%= light ? 'black' : 'white' %>;
+			display: flex;
+			background: radial-gradient(<%- colour %> 0%, <%- light ? 'white' : 'black' %> 400%);
+		}
+
+		#text {
+			margin: auto;
+		}
+	</style>
 </head>
 <body>
 	<h1 style='font-family: "<%- font %>";'>Hi there!</h1>
-	<canvas id='canvas'></canvas>
-	<script>
-		const height = <%= dimension %>, width = height,
-			  bgColor    = <%- colour %>,
-			  light      = <%= light %>,
-			  fontSize   = <%= fontSize %>;
-
-		const text = <%- text %>;
-
-		const svg = `
-		<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-			<foreignObject x="0" y="0" width="${width}" height="${height}">
-				<style>
-				
-
-				div.a {
-					margin: 20px 80px;
-					height: ${height}px;
-					font-weight: normal;
-					font-family: '<%- font %>';
-					font-style: italic;
-					font-weight: bold;
-					font-size: ${fontSize}px;
-					color: ${light ? 'black' : 'white'};
-					display: flex;
-				}
-
-				div.b {
-					margin: auto;
-				}
-				</style>
-				<div xmlns="http://www.w3.org/1999/xhtml">
-					<div class='a'>
-						<div class='b'>${text}</div>
-					</div>
-				</div>
-			</foreignObject>
-		</svg>
-		`
-		.replace(/\n/g, '');
-
-		window.addEventListener('load', async () => {
-			// Wait for font to load
-			const font = '10px <%- font %>';
-			await new Promise((resolve, reject) => {
-				const poller = setInterval(async () => {
-					try {
-						await document.fonts.load(font);
-					} catch (err) {
-						reject(err);
-					}
-					if (document.fonts.check(font)) {
-						clearInterval(poller);
-						resolve(true);
-					}
-				}, 10);
-				setTimeout(() => clearInterval(poller), 1000);
-			});
-
-			/**
-			 * @type {HTMLCanvasElement}
-			 */
-			const canvas = document.getElementById('canvas');
-
-			canvas.height = height;
-			canvas.width = width;
-
-			const ctx = canvas.getContext('2d');
-
-			ctx.fillStyle = bgColor;
-			ctx.fillRect(0, 0, width, height);
-
-			const grad = ctx.createRadialGradient(
-				width / 2, height / 2,
-				width / 4,
-				width / 2, height / 2,
-				width * 4
-			);
-
-			grad.addColorStop(0, bgColor);
-			grad.addColorStop(0.5, light ? 'white' : 'black');
-
-			ctx.fillStyle = grad;
-			ctx.fillRect(0, 0, width, height);
-
-			const img = document.createElement('img');
-
-			img.onload = () => {
-				ctx.drawImage(img, 0, 0);
-			};
-
-			img.src = `data:image/svg+xml,${svg}`;
-		});
-	</script>
+	<div id='render'>
+		<div id='text'>
+			<%- text %>
+		</div>
+	</div>
 </body>
 </html>
