@@ -13,6 +13,11 @@ const fail = msg => {
 	process.exit(1);
 };
 
+if ('FONTS_LOADED' in process.env)
+	delete process.env.FONTS_LOADED;
+if ('DEFAULT_FONT' in process.env)
+	delete process.env.DEFAULT_FONT;
+
 if (require && require.main === module)
 	yargs(hideBin(process.argv))
 		.check(argv => {

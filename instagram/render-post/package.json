@@ -11,6 +11,8 @@
   "author": "Param Siddharth <contact@paramsid.com> (http://www.paramsid.com/)",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.1.2",
+    "canvas": "^2.10.1",
     "fs-extra": "^10.1.0",
     "yargs": "^17.6.0"
   }
