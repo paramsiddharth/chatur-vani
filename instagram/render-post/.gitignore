@@ -132,3 +132,8 @@ dist
 # Fonts
 /fonts/*
 !/fonts/items.example.json
+
+# Renders
+*.svg
+*.png
+*.pdf
