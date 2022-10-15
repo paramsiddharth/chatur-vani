@@ -10,14 +10,17 @@ load_dotenv()
 
 import requests
 
-from constants import LOCAL_DIR, GRAPH_API_URL, GRAPH_API_VERSION, INSTAGRAM_GRAPH_API_URL
+from constants import LOCAL_DIR, GRAPH_API_URL, GRAPH_API_VERSION
 from errors import InvalidTokenError 
 
-def get_user_id():
-	return env.get('INSTAGRAM_USER_ID')
+def get_app_id():
+	return env.get('FACEBOOK_APP_ID')
 
 def get_app_secret():
 	return env.get('FACEBOOK_APP_SECRET')
+
+def get_user_id():
+	return env.get('INSTAGRAM_USER_ID')
 
 def get_access_token():
 	right_now = datetime.utcnow()
@@ -50,9 +53,14 @@ def get_access_token():
 	expiration = datetime.fromisoformat(config.get('expiration'))
 	if (expiration - datetime.utcnow()).days < 15:
 		# Refresh token
-		req_url = f'{INSTAGRAM_GRAPH_API_URL}/access_token'
+		app_id = get_app_id()
+		app_secret = get_app_secret()
+		req_url = f'{GRAPH_API_URL}/v{GRAPH_API_VERSION}/oauth/access_token'
 		resp = requests.get(req_url, params={
-			'access_token': env_token
+			'fb_exchange_token': token,
+			'grant_type':        'fb_exchange_token',
+			'client_id':         app_id,
+			'client_secret':     app_secret
 		})
 		if not resp.ok:
 			print('Status code:', resp.status_code, file=stderr)
