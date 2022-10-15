@@ -1,5 +1,5 @@
 # Chatur Vani
-Chatur Vani (`@chatur_vani`) is a bot,
+Chatur Vani (`@chatur_vani`) is a non-living intelligent being,
 currently available on
 [Twitter](https://twitter.com/chatur_vani)
 and
