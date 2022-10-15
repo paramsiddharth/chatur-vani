@@ -161,3 +161,6 @@ cython_debug/
 
 # Not to be committed
 /*.local.*
+/*.png
+/*.jpeg
+/*.jpg
