@@ -1,7 +1,5 @@
-from render import render
+from api import post
 
 print('Hi!')
 
-output = render('Hi!', dir=':-')
-if output is not None:
-	print(output)
+post('Hello!')

@@ -1,3 +1,6 @@
 from os import path
 
-local_dir = path.dirname(path.realpath(__file__))
+LOCAL_DIR = path.dirname(path.realpath(__file__))
+
+GRAPH_API_VERSION = 15.0
+GRAPH_API_URL     = 'https://graph.facebook.com'
