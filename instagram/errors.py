@@ -6,3 +6,6 @@ class UploadError(Exception):
 
 class ContainerCreationError(Exception):
 	...
+
+class InvalidTokenError(Exception):
+	...

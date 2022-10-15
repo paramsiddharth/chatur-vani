@@ -164,3 +164,6 @@ cython_debug/
 /*.png
 /*.jpeg
 /*.jpg
+
+# Sensitive data
+/config.json
