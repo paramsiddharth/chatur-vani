@@ -4,8 +4,8 @@ from random import randint
 from os import path, getcwd
 from sys import stderr
 
-from constants import LOCAL_DIR
-from errors import RenderError
+from .constants import LOCAL_DIR
+from .errors import RenderError
 
 __all__ = [
 	'render'

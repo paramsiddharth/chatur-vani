@@ -2,9 +2,9 @@ from sys import stderr
 
 import tweepy
 
-from errors import EmptyTweetError, UnauthorizedError, \
+from .errors import EmptyTweetError, UnauthorizedError, \
 	TweetFailedError
-from auth import get_consumer_key, get_consumer_secret, \
+from .auth import get_consumer_key, get_consumer_secret, \
 	get_access_token, get_token_secret
 
 __all__ = [
@@ -19,13 +19,14 @@ auth = tweepy.OAuth1UserHandler(
 )
 twt = tweepy.API(auth, wait_on_rate_limit=True)
 
-try:
-	u = twt.get_user(screen_name='ParamSiddharth')
-except Exception as e:
-	print('Error:', e.args, file=stderr)
-	raise UnauthorizedError('Invalid keys.')
+def verify_credentials():
+	try:
+		u = twt.get_user(screen_name='ParamSiddharth')
+	except Exception as e:
+		print('Error:', e.args, file=stderr)
+		raise UnauthorizedError('Invalid keys.')
 
-print('🐤 Client initialized.')
+	print('🐤 Client initialized.')
 
 def tweet(text='', **kwargs):
 	if len(text) < 1:

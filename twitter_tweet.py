@@ -1,4 +1,4 @@
-from api import tweet
+from twitter import tweet
 
 print('Hi!')
 

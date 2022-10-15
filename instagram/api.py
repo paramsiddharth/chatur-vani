@@ -10,10 +10,10 @@ import requests
 import cloudinary.uploader
 import cloudinary.api
 
-from errors import UploadError, ContainerCreationError
-from auth import get_user_id, get_access_token
-from constants import GRAPH_API_URL, GRAPH_API_VERSION
-from render import render
+from .errors import UploadError, ContainerCreationError
+from .auth import get_user_id, get_access_token
+from .constants import GRAPH_API_URL, GRAPH_API_VERSION
+from .render import render
 
 __all__ = [
 	'post'
