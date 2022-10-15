@@ -24,11 +24,14 @@ if (require && require.main === module)
 		.scriptName(NAME)
 		.usage('$0 <text> [colour] [light] [output-dir]')
 		.command('$0 [text] [colour] [light] [output-dir]', 'Render the post (post.png)', {}, async argv => {
+			// console.debug(argv);
 			const { text } = argv;
 			const colour = argv.colour ?? '#fff';
 			const light = (argv.light ?? 'yes') === 'yes' ? true : false;
-			const outputDir = path.resolve(argv.outputDir ?? process.cwd());
-			if (!fs.pathExistsSync(outputDir))
+			const outputDir = argv.outputDir === ':-'
+				? argv.outputDir
+				: path.resolve(argv.outputDir ?? process.cwd());
+			if (argv.outputDir !== ':-' && !fs.pathExistsSync(outputDir))
 				fail(`Invalid path: ${outputDir}`);
 
 			try {

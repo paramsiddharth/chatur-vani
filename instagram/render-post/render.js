@@ -34,8 +34,11 @@ const render = async (text, postPath, light = false, colour = '#d00' /* '#dff' *
 
 	const rendered = await page.$('#render');
 
-	await rendered.screenshot({ path: path.resolve(postPath, 'post.png') });
-	// await page.screenshot({ path: path.join(__dirname, 'screenshot.png') });
+	if (postPath === ':-')
+		process.stdout.write('data:image/png;base64,' + (await rendered.screenshot({ encoding: 'base64' })));
+	else
+		await rendered.screenshot({ path: path.resolve(postPath, 'post.png') });
+		// await page.screenshot({ path: path.join(__dirname, 'screenshot.png') });
 
 	await browser.close();
 });
