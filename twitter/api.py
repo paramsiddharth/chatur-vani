@@ -36,4 +36,4 @@ def tweet(text='', **kwargs):
 		twt.update_status(text)
 	except Exception as e:
 		print('Error:', e.args, file=stderr)
-		raise TweetFailedError('Faled to Tweet.')
+		raise TweetFailedError('Failed to Tweet.')
