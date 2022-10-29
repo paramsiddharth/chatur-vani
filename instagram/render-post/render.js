@@ -9,7 +9,8 @@ const render = async (text, postPath, light = false, colour = '#d00' /* '#dff' *
 	const fontSize = DIMENSION * FONT_RATIO;
 
 	const browser = await puppet.launch({
-		headless: true
+		headless: true,
+		timeout: 5 * 60 * 1000
 	});
 	const page = await browser.newPage();
 
