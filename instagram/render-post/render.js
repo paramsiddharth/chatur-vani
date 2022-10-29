@@ -30,7 +30,8 @@ const render = async (text, postPath, light = false, colour = '#d00' /* '#dff' *
 		deviceScaleFactor: 1,
 	}); */
 	await page.setContent(html, {
-		waitUntil: 'networkidle0'
+		waitUntil: 'networkidle0',
+		timeout: 5 * 60 * 1000
 	});
 
 	const rendered = await page.$('#render');
